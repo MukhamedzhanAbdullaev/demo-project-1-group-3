@@ -8,7 +8,7 @@ class AirQualityApiClient:
             raise Exception("API key cannot be set to None.")
         self.api_key = api_key
 
-    def get_city(self, city_name: str) -> dict:
+    def get_air_quality(self, city_name: str) -> dict:
         """
         Get the latest air quality data for a specified city.
 
@@ -28,8 +28,8 @@ class AirQualityApiClient:
                 data = {
                     'aqi': res['data']['aqi']
                 }
-                weather_data = res['data']['iaqi']
-                data.update(flatdict.FlatDict(weather_data, delimiter='.'))
+                aq_data = res['data']['iaqi']
+                data.update(flatdict.FlatDict(aq_data, delimiter='.'))
                 time_data = res['data']['time']
                 data.update(time_data)
                 return data

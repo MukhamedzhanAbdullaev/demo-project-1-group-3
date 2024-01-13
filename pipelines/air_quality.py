@@ -3,7 +3,7 @@ import os
 from connectors.air_quality_api import AirQualityApiClient
 from sqlalchemy import Table, MetaData, Column, Integer, String, Float
 from assets.air_quality import (
-    extract_aqi
+    extract_air_quality
 )
 import yaml
 from pathlib import Path
@@ -35,7 +35,7 @@ if __name__ == "__main__":
 
     config=pipeline_config.get("config")
 
-    df_aqi = extract_aqi(
+    df_aq, df_cities = extract_air_quality(
         air_quality_api_client=air_quality_api_client,
         city_reference_path=config.get("city_reference_path"),
     )
