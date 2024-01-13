@@ -32,8 +32,7 @@ class AirQualityApiClient:
                 data.update(flatdict.FlatDict(weather_data, delimiter='.'))
                 time_data = res['data']['time']
                 data.update(time_data)
-                print(city_name)
-                return response.json()
+                return data
         else:
             raise Exception(
                 f"Failed to extract data from Open Weather API. Status Code: {response.status_code}. Response: {response.text}"

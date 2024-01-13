@@ -16,5 +16,4 @@ def extract_aqi(
         aqi_data.append(air_quality_api_client.get_city(city_name=city_parsed))
 
     df_aqi = pd.json_normalize(aqi_data)
-    print(df_aqi.head())
     return df_aqi
