@@ -26,6 +26,7 @@ class AirQualityApiClient:
             res = response.json()
             if res['status'] == "ok":
                 data = {
+                    'city_name': city_name,
                     'aqi': res['data']['aqi']
                 }
                 aq_data = res['data']['iaqi']

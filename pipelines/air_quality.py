@@ -3,7 +3,8 @@ import os
 from connectors.air_quality_api import AirQualityApiClient
 from sqlalchemy import Table, MetaData, Column, Integer, String, Float
 from assets.air_quality import (
-    extract_air_quality
+    extract_air_quality,
+    transform
 )
 import yaml
 from pathlib import Path
@@ -40,5 +41,6 @@ if __name__ == "__main__":
         city_reference_path=config.get("city_reference_path"),
     )
 
-#transform-----
-print('hello')
+
+    df = transform(df_aq=df_aq, df_cities=df_cities)
+    print(df)

@@ -16,26 +16,36 @@ def extract_air_quality(
         aq_data.append(air_quality_api_client.get_air_quality(city_name=city_parsed))
 
     df_aq = pd.json_normalize(aq_data)
-    print(df_aq.head())
     return df_aq, df_cities
 
 
-#transform
 def transform(df_aq: pd.DataFrame, df_cities: pd.DataFrame) -> pd.DataFrame:
     """Transform the raw dataframes."""
     pd.options.mode.chained_assignment = None  # default='warn'
-    # set city names to lowercase (First Transformation)
-    df_aq["city_name"] = df_aq["City"].str.lower() 
-    df_merged = pd.merge(left=df_cities, right=df_aq, on=["City", "Country"]) ########### I cant tell if Country is a field in df_aq
-    # Select specific columns (Second Transformation)
-    df_selected = df_merged[["dt", "id", "name", "main.temp", "population"]]
-    #df_selected["unique_id"] = df_selected["dt"].astype(str) + df_selected["id"].astype(str)
+    
+    # set city names to same format
+    df_cities["city_name"] = df_cities["city"].str.lower().replace(r'[\s-]', '', regex=True)
+    df_aq["city_name"] = df_aq["city_name"].str.lower().replace(r'[\s-]', '', regex=True)
 
-    # convert unix timestamp column to datetime (Third Transformation)
-    df_selected["dt"] = pd.to_datetime(df_selected["dt"], unit="s")
-    # rename colum names to more meaningful names
+    df_merged = pd.merge(left=df_cities, right=df_aq, left_on=["city_name"], right_on=["city_name"])
+
+    # select specific columns 
+    df_selected = df_merged[["city", "country", "aqi", "city_population", "city_area_km2", "iso"]]
+   
+    df_selected["aqi"] = pd.to_numeric(df_selected["aqi"], errors='coerce')
+    df_selected["aqi"] = df_selected["aqi"].astype('Int64')
+   
+    # add ratio city_area_km2/aqi
+    df_selected["ratio"] = (df_selected["city_area_km2"]/df_selected["aqi"]).round(2)     #pd.to_numeric(df_selected["aqi"], errors='coerce')
+
+    # add rank by population 
+    df_selected["population_rank"] = df_selected["city_population"].rank(ascending=False).astype(int)
+
+    # add population/area column
+    df_selected["population_density"] = (df_selected["city_population"]/df_selected["city_area_km2"]).astype(int)
+
     df_selected = df_selected.rename(
-        columns={"dt": "datetime", "main.temp": "temperature"}
+        columns={"aqi": "air_quality_index", "iso": "update_datetime"}
     )
-    df_selected = df_selected.set_index(["unique_id"])
+
     return df_selected
