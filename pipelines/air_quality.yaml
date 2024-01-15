@@ -1,0 +1,7 @@
+name: air_quality_etl
+config: 
+  city_reference_path: "./data/city_data.csv"
+  log_folder_path: "./logs"
+schedule:
+  run_seconds: 5
+  poll_seconds: 2

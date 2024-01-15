@@ -1,4 +1,4 @@
-City,Country,City Population,City Area (km2),Urban Population,Urban Area (km2)
+city,country,city_population,city_area_km2,urban_population,urban_area_km2
 Tokyo,Japan,13515271,2191,37732000,8231
 Delhi,India,16753235,1484,32226000,2344
 Shanghai,China,24870895,6341,24073000,4333
