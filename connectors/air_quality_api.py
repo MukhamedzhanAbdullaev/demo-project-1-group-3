@@ -13,10 +13,10 @@ class AirQualityApiClient:
         Get the latest air quality data for a specified city.
 
         Args:
-            city_name: the name of the city in english.
+            city_name: the name of the city in english, parsed to replace spaces with '-' and all lowercased.
 
         Returns:
-            City temperature dictionary
+            City air quality index and other related data dictionary
 
         Raises:
             Exception if response code is not 200.

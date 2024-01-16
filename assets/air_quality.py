@@ -1,6 +1,6 @@
 import pandas as pd
 from connectors.air_quality_api import AirQualityApiClient
-from connectors.posgresql import PostgreSqlClient
+from connectors.postgresql import PostgreSqlClient
 from pathlib import Path
 from sqlalchemy import Table, MetaData, Column, Integer, String, Float
 
@@ -45,17 +45,17 @@ def transform(df_aq: pd.DataFrame, df_cities: pd.DataFrame) -> pd.DataFrame:
     df_selected["population/km2"] = (df_selected["city_population"]/df_selected["city_area_km2"]).astype(int)
 
     #drop area column
-    df_selected = df_selected.drop(columns=['city_area_km2'])
+    df_aq_cities = df_selected.drop(columns=['city_area_km2'])
 
     #Rename columns
-    df_selected = df_selected.rename(
+    df_aq_cities = df_selected.rename(
         columns={"city_population": "population", "h.v": "humidity", "t.v": "temperature", "pm10.v": "pm10", "pm25.v": "pm2.5", "iso": "iso_datetime"}
     )
 
     #Add category rank depending on value of aqi
-    df_selected['air_pollution_level'] = pd.cut(df_selected['aqi'], [0, 50, 100, 150, 200, 300, 1000], labels = ['Good', 'Moderate', 'Unhealthy if Sensitive', 'Unhealthy', 'Very Unhealthy', 'Hazardous'])
+    df_aq_cities['air_pollution_level'] = pd.cut(df_aq_cities['aqi'], [0, 50, 100, 150, 200, 300, 1000], labels = ['Good', 'Moderate', 'Unhealthy if Sensitive', 'Unhealthy', 'Very Unhealthy', 'Hazardous'])
 
-    return df_selected
+    return df_aq_cities
 
 def load(
     df: pd.DataFrame,
