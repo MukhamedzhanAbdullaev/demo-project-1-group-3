@@ -6,6 +6,7 @@ from assets.metadata_logging import MetaDataLogging, MetaDataLoggingStatus
 from assets.pipeline_logging import PipelineLogging
 from sqlalchemy import Table, MetaData, Column, Integer, String, Float
 from assets.air_quality import (
+    extract_cities_data,
     extract_air_quality,
     transform,
     load
@@ -30,9 +31,12 @@ def pipeline(config: dict, pipeline_logging: PipelineLogging):
     air_quality_api_client = AirQualityApiClient(api_key=API_KEY)
     # extract
     pipeline_logging.logger.info("Extracting data from Air Quality API and CSV file")
-    df_aq, df_cities = extract_air_quality(
-        air_quality_api_client=air_quality_api_client,
+    df_cities = extract_cities_data(
         city_reference_path=config.get("city_reference_path"),
+    )
+    df_aq = extract_air_quality(
+        air_quality_api_client=air_quality_api_client,
+        df_cities=df_cities,
     )
     # transform
     pipeline_logging.logger.info("Transforming dataframes with pandas")

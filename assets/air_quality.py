@@ -4,14 +4,20 @@ from connectors.postgresql import PostgreSqlClient
 from pathlib import Path
 from sqlalchemy import Table, MetaData, Column, Integer, String, Float
 
-
-def extract_air_quality(
-    air_quality_api_client: AirQualityApiClient, city_reference_path: Path
-) -> pd.DataFrame:
+def extract_cities_data(city_reference_path: Path)->pd.DataFrame:
     """
-    Perform extraction using a filepath which contains a list of cities and API which has live data on each city.
+    Perform extraction using an API which has live data on each city.
     """
     df_cities = pd.read_csv(city_reference_path)
+    return df_cities
+
+def extract_air_quality(
+    air_quality_api_client: AirQualityApiClient,
+    df_cities: pd.DataFrame
+) -> pd.DataFrame:
+    """
+    Perform extraction using an API which has live data on each city.
+    """
     aq_data = []
     for city in df_cities["city"]:
         city_parsed = city.replace(" ", "-").lower()
@@ -53,7 +59,7 @@ def transform(df_aq: pd.DataFrame, df_cities: pd.DataFrame) -> pd.DataFrame:
 
     #Add category rank depending on value of aqi
     df_aq_cities['air_pollution_level'] = pd.cut(df_aq_cities['aqi'], [0, 50, 100, 150, 200, 300, 1000], labels = ['Good', 'Moderate', 'Unhealthy if Sensitive', 'Unhealthy', 'Very Unhealthy', 'Hazardous'])
-    
+
     return df_aq_cities
 
 def load(
