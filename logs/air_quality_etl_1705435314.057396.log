@@ -1,0 +1,6 @@
+2024-01-16 15:01:54,133 - air_quality_etl - INFO - Starting pipeline run
+2024-01-16 15:01:54,133 - air_quality_etl - INFO - Getting pipeline environment variables
+2024-01-16 15:01:54,134 - air_quality_etl - INFO - Creating Air Quality API client
+2024-01-16 15:01:54,134 - air_quality_etl - INFO - Extracting data from Air Quality API and CSV file
+2024-01-16 15:03:15,231 - air_quality_etl - INFO - Transforming dataframes with pandas
+2024-01-16 15:03:15,238 - air_quality_etl - ERROR - Pipeline run failed. See detailed logs: tuple indices must be integers or slices, not str

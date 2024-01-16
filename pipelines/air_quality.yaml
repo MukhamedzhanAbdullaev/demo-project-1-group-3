@@ -3,5 +3,5 @@ config:
   city_reference_path: "./data/city_data.csv"
   log_folder_path: "./logs"
 schedule:
-  run_seconds: 5
-  poll_seconds: 2
+  run_seconds: 25
+  poll_seconds: 10
