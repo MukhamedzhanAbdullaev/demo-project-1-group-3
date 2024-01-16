@@ -62,20 +62,20 @@ if __name__ == "__main__":
     )
     metadata = MetaData()
     table = Table(
-        "air_quality_data",
+        "air_quality_city_data",
         metadata,
         Column("id", Integer, primary_key=True),
         Column("iso_datetime", String),
         Column("city", String),
         Column("country", String),
         Column("population", Integer),
-        Column("aqi", Integer),
-        Column("humidity", Float),
         Column("temperature", Float),
+        Column("humidity", Float),
         Column("pm10", Float),
         Column("pm2.5", Float),
-        Column("aqi_rank", Integer),
         Column("population/km2", Integer),
+        Column("aqi", Integer),
+        Column("aqi_rank", Integer),
         Column("air_pollution_level", String),
     )
     load(
