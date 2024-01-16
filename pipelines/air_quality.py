@@ -43,4 +43,4 @@ if __name__ == "__main__":
 
 
     df = transform(df_aq=df_aq, df_cities=df_cities)
-    print(df)
+    print(df.head())
