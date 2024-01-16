@@ -7,7 +7,7 @@ def extract_air_quality(
     air_quality_api_client: AirQualityApiClient, city_reference_path: Path
 ) -> pd.DataFrame:
     """
-    Perform extraction using a filepath which contains a list of cities.
+    Perform extraction using a filepath which contains a list of cities and API which has live data on each city.
     """
     df_cities = pd.read_csv(city_reference_path)
     aq_data = []
@@ -16,6 +16,7 @@ def extract_air_quality(
         aq_data.append(air_quality_api_client.get_air_quality(city_name=city_parsed))
 
     df_aq = pd.json_normalize(aq_data)
+    # print(df_aq.iloc[:, : 10])
     return df_aq, df_cities
 
 
@@ -30,22 +31,26 @@ def transform(df_aq: pd.DataFrame, df_cities: pd.DataFrame) -> pd.DataFrame:
     df_merged = pd.merge(left=df_cities, right=df_aq, left_on=["city_name"], right_on=["city_name"])
 
     # select specific columns 
-    df_selected = df_merged[["city", "country", "aqi", "city_population", "city_area_km2", "iso"]]
+    df_selected = df_merged[["city", "country", "city_population", "city_area_km2", "aqi", "h.v", "t.v", "pm10.v", "pm25.v", "iso"]]
    
     df_selected["aqi"] = pd.to_numeric(df_selected["aqi"], errors='coerce')
     df_selected["aqi"] = df_selected["aqi"].astype('Int64')
-   
-    # add ratio city_area_km2/aqi
-    df_selected["ratio"] = (df_selected["city_area_km2"]/df_selected["aqi"]).round(2)     #pd.to_numeric(df_selected["aqi"], errors='coerce')
 
-    # add rank by population 
-    df_selected["population_rank"] = df_selected["city_population"].rank(ascending=False).astype(int)
+    # add rank by aqi (higher reanked is better)
+    df_selected["aqi_rank"] = df_selected["aqi"].rank(ascending=True).astype(int)
 
-    # add population/area column
-    df_selected["population_density"] = (df_selected["city_population"]/df_selected["city_area_km2"]).astype(int)
+    # add population density column
+    df_selected["population/km2"] = (df_selected["city_population"]/df_selected["city_area_km2"]).astype(int)
 
+    #drop area column
+    df_selected = df_selected.drop(columns=['city_area_km2'])
+
+    #Rename columns
     df_selected = df_selected.rename(
-        columns={"aqi": "air_quality_index", "iso": "update_datetime"}
+        columns={"city_population": "population", "h.v": "humidity", "t.v": "temperature", "pm10.v": "pm10", "pm25.v": "pm2.5", "iso": "iso_datetime"}
     )
+
+    #Add category rank depending on value of aqi
+    df_selected['air_pollution_level'] = pd.cut(df_selected['aqi'], [0, 50, 100, 150, 200, 300, 1000], labels = ['Good', 'Moderate', 'Unhealthy if Sensitive', 'Unhealthy', 'Very Unhealthy', 'Hazardous'])
 
     return df_selected
