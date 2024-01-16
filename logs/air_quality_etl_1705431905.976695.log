@@ -1,0 +1,7 @@
+2024-01-16 14:05:06,053 - air_quality_etl - INFO - Starting pipeline run
+2024-01-16 14:05:06,053 - air_quality_etl - INFO - Getting pipeline environment variables
+2024-01-16 14:05:06,053 - air_quality_etl - INFO - Creating Air Quality API client
+2024-01-16 14:05:06,053 - air_quality_etl - INFO - Extracting data from Air Quality API and CSV file
+2024-01-16 14:06:27,038 - air_quality_etl - INFO - Transforming dataframes with pandas
+2024-01-16 14:06:27,110 - air_quality_etl - INFO - Loading data to postgres
+2024-01-16 14:06:27,163 - air_quality_etl - ERROR - Pipeline run failed. See detailed logs: Unconsumed column names: city_area_km2

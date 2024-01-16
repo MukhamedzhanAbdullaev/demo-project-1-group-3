@@ -33,28 +33,27 @@ def transform(df_aq: pd.DataFrame, df_cities: pd.DataFrame) -> pd.DataFrame:
     df_merged = pd.merge(left=df_cities, right=df_aq, left_on=["city_name"], right_on=["city_name"])
 
     # select specific columns 
-    df_selected = df_merged[["city", "country", "city_population", "city_area_km2", "aqi", "h.v", "t.v", "pm10.v", "pm25.v", "iso"]]
-   
-    df_selected["aqi"] = pd.to_numeric(df_selected["aqi"], errors='coerce')
-    df_selected["aqi"] = df_selected["aqi"].astype('Int64')
+    df_aq_cities = df_merged[["city", "country", "city_population", "city_area_km2", "aqi", "h.v", "t.v", "pm10.v", "pm25.v", "iso"]]
+    df_aq_cities["aqi"] = pd.to_numeric(df_aq_cities["aqi"], errors='coerce')
+    df_aq_cities["aqi"] = df_aq_cities["aqi"].astype('Int64')
 
-    # add rank by aqi (higher reanked is better)
-    df_selected["aqi_rank"] = df_selected["aqi"].rank(ascending=True).astype(int)
+    # add rank by aqi (higher ranked is better)
+    df_aq_cities["aqi_rank"] = df_aq_cities["aqi"].rank(ascending=True).astype(int)
 
     # add population density column
-    df_selected["population/km2"] = (df_selected["city_population"]/df_selected["city_area_km2"]).astype(int)
+    df_aq_cities["population/km2"] = (df_aq_cities["city_population"]/df_aq_cities["city_area_km2"]).astype(int)
 
     #drop area column
-    df_aq_cities = df_selected.drop(columns=['city_area_km2'])
+    df_aq_cities = df_aq_cities.drop(columns=['city_area_km2'])
 
     #Rename columns
-    df_aq_cities = df_selected.rename(
+    df_aq_cities = df_aq_cities.rename(
         columns={"city_population": "population", "h.v": "humidity", "t.v": "temperature", "pm10.v": "pm10", "pm25.v": "pm2.5", "iso": "iso_datetime"}
     )
 
     #Add category rank depending on value of aqi
     df_aq_cities['air_pollution_level'] = pd.cut(df_aq_cities['aqi'], [0, 50, 100, 150, 200, 300, 1000], labels = ['Good', 'Moderate', 'Unhealthy if Sensitive', 'Unhealthy', 'Very Unhealthy', 'Hazardous'])
-
+    
     return df_aq_cities
 
 def load(

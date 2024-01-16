@@ -112,12 +112,6 @@ if __name__ == "__main__":
     LOGGING_USERNAME = os.environ.get("LOGGING_USERNAME")
     LOGGING_PASSWORD = os.environ.get("LOGGING_PASSWORD")
     LOGGING_PORT = os.environ.get("LOGGING_PORT")
-    # API_KEY = os.environ.get("API_KEY")
-    # SERVER_NAME = os.environ.get("SERVER_NAME")
-    # DATABASE_NAME = os.environ.get("DATABASE_NAME")
-    # DB_USERNAME = os.environ.get("DB_USERNAME")
-    # DB_PASSWORD = os.environ.get("DB_PASSWORD")
-    # PORT = os.environ.get("PORT")
 
     postgresql_logging_client = PostgreSqlClient(
         server_name=LOGGING_SERVER_NAME,
@@ -149,51 +143,3 @@ if __name__ == "__main__":
     while True:
         schedule.run_pending()
         time.sleep(pipeline_config.get("schedule").get("poll_seconds"))
-    
-    # air_quality_api_client = AirQualityApiClient(api_key=API_KEY)
-
-    # config=pipeline_config.get("config")
-
-    # #extract
-    # df_aq, df_cities = extract_air_quality(
-    #     air_quality_api_client=air_quality_api_client,
-    #     city_reference_path=config.get("city_reference_path"),
-    # )
-
-    # #transform
-    # df_transformed = transform(df_aq=df_aq, df_cities=df_cities)
-    # print(df_transformed.head())
-
-    # #load
-    # postgresql_client = PostgreSqlClient(
-    #     server_name=SERVER_NAME,
-    #     database_name=DATABASE_NAME,
-    #     username=DB_USERNAME,
-    #     password=DB_PASSWORD,
-    #     port=PORT,
-    # )
-    # metadata = MetaData()
-    # table = Table(
-    #     "air_quality_city_data",
-    #     metadata,
-    #     Column("id", Integer, primary_key=True),
-    #     Column("iso_datetime", String),
-    #     Column("city", String),
-    #     Column("country", String),
-    #     Column("population", Integer),
-    #     Column("temperature", Float),
-    #     Column("humidity", Float),
-    #     Column("pm10", Float),
-    #     Column("pm2.5", Float),
-    #     Column("population/km2", Integer),
-    #     Column("aqi", Integer),
-    #     Column("aqi_rank", Integer),
-    #     Column("air_pollution_level", String),
-    # )
-    # load(
-    #     df=df_transformed,
-    #     postgresql_client=postgresql_client,
-    #     table=table,
-    #     metadata=metadata,
-    #     load_method="upsert",
-    # )
