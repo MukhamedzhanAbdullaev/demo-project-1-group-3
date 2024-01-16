@@ -25,7 +25,7 @@ def extract_air_quality(
 
     df_aq = pd.json_normalize(aq_data)
     # print(df_aq.iloc[:, : 10])
-    return df_aq, df_cities
+    return df_aq
 
 
 def transform(df_aq: pd.DataFrame, df_cities: pd.DataFrame) -> pd.DataFrame:

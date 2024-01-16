@@ -25,15 +25,21 @@ class AirQualityApiClient:
         if response.status_code == 200:
             res = response.json()
             if res['status'] == "ok":
-                data = {
-                    'city_name': city_name,
-                    'aqi': res['data']['aqi']
-                }
-                aq_data = res['data']['iaqi']
-                data.update(flatdict.FlatDict(aq_data, delimiter='.'))
-                time_data = res['data']['time']
-                data.update(time_data)
-                return data
+                try:
+                    aqi = float(res['data']['aqi'])
+                    data = {
+                        'city_name': city_name,
+                        'aqi': aqi
+                    }
+                    aq_data = res['data']['iaqi']
+                    data.update(flatdict.FlatDict(aq_data, delimiter='.'))
+                    time_data = res['data']['time']
+                    data.update(time_data)
+                    return data
+                except ValueError:
+                    print(f"AQI data not available for {city_name}")
+            else:
+                print(f"City data not available for {city_name}")
         else:
             raise Exception(
                 f"Failed to extract data from Open Weather API. Status Code: {response.status_code}. Response: {response.text}"

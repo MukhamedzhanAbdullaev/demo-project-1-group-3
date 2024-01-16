@@ -60,14 +60,14 @@ def pipeline(config: dict, pipeline_logging: PipelineLogging):
         Column("city", String),
         Column("country", String),
         Column("population", Integer),
-        Column("temperature", Float),
-        Column("humidity", Float),
-        Column("pm10", Float),
-        Column("pm2.5", Float),
         Column("population/km2", Integer),
         Column("aqi", Integer),
         Column("aqi_rank", Integer),
         Column("air_pollution_level", String),
+        Column("temperature", Float),
+        Column("humidity", Float),
+        Column("pm10", Float),
+        Column("pm2.5", Float),
     )
     load(
         df=df_transformed,

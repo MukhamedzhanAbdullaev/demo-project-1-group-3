@@ -1,0 +1,5 @@
+2024-01-16 14:47:57,086 - air_quality_etl - INFO - Starting pipeline run
+2024-01-16 14:47:57,086 - air_quality_etl - INFO - Getting pipeline environment variables
+2024-01-16 14:47:57,086 - air_quality_etl - INFO - Creating Air Quality API client
+2024-01-16 14:47:57,086 - air_quality_etl - INFO - Extracting data from Air Quality API and CSV file
+2024-01-16 14:48:15,950 - air_quality_etl - ERROR - Pipeline run failed. See detailed logs: invalid literal for int() with base 10: '-'
