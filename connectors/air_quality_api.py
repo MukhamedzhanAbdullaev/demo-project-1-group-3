@@ -8,7 +8,7 @@ class AirQualityApiClient:
             raise Exception("API key cannot be set to None.")
         self.api_key = api_key
 
-    def get_air_quality(self, city_name: str) -> dict:
+    def get_air_quality(self, city: str) -> dict:
         """
         Get the latest air quality data for a specified city.
 
@@ -21,14 +21,15 @@ class AirQualityApiClient:
         Raises:
             Exception if response code is not 200.
         """
-        response = requests.get(f"{self.base_url}/{city_name}/?token={self.api_key}")
+        city_parsed = city.replace(" ", "-").lower()
+        response = requests.get(f"{self.base_url}/{city_parsed}/?token={self.api_key}")
         if response.status_code == 200:
             res = response.json()
             if res['status'] == "ok":
                 try:
                     aqi = float(res['data']['aqi'])
                     data = {
-                        'city_name': city_name,
+                        'city_name': city_parsed,
                         'aqi': aqi
                     }
                     aq_data = res['data']['iaqi']
@@ -37,9 +38,9 @@ class AirQualityApiClient:
                     data.update(time_data)
                     return data
                 except ValueError:
-                    print(f"AQI data not available for {city_name}")
+                    print(f"Air quality data not available for {city}")
             else:
-                print(f"City data not available for {city_name}")
+                print(f"Data not available for {city}")
         else:
             raise Exception(
                 f"Failed to extract data from Open Weather API. Status Code: {response.status_code}. Response: {response.text}"

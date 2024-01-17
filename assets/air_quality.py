@@ -6,7 +6,7 @@ from sqlalchemy import Table, MetaData, Column, Integer, String, Float
 
 def extract_cities_data(city_reference_path: Path)->pd.DataFrame:
     """
-    Perform extraction using an API which has live data on each city.
+    Perform extraction using a CSV file to get data on most populated cities in the world.
     """
     df_cities = pd.read_csv(city_reference_path)
     return df_cities
@@ -20,8 +20,7 @@ def extract_air_quality(
     """
     aq_data = []
     for city in df_cities["city"]:
-        city_parsed = city.replace(" ", "-").lower()
-        aq_data.append(air_quality_api_client.get_air_quality(city_name=city_parsed))
+        aq_data.append(air_quality_api_client.get_air_quality(city=city))
 
     df_aq = pd.json_normalize(aq_data)
     # print(df_aq.iloc[:, : 10])
@@ -35,7 +34,7 @@ def transform(df_aq: pd.DataFrame, df_cities: pd.DataFrame) -> pd.DataFrame:
     # set city names to same format
     df_cities["city_name"] = df_cities["city"].str.lower().replace(r'[\s-]', '', regex=True)
     df_aq["city_name"] = df_aq["city_name"].str.lower().replace(r'[\s-]', '', regex=True)
-
+    # merge dataframes
     df_merged = pd.merge(left=df_cities, right=df_aq, left_on=["city_name"], right_on=["city_name"])
 
     # select specific columns 
@@ -49,10 +48,10 @@ def transform(df_aq: pd.DataFrame, df_cities: pd.DataFrame) -> pd.DataFrame:
     # add population density column
     df_aq_cities["population/km2"] = (df_aq_cities["city_population"]/df_aq_cities["city_area_km2"]).astype(int)
 
-    #drop area column
+    # drop area column
     df_aq_cities = df_aq_cities.drop(columns=['city_area_km2'])
 
-    #Rename columns
+    # rename columns
     df_aq_cities = df_aq_cities.rename(
         columns={"city_population": "population", "h.v": "humidity", "t.v": "temperature", "pm10.v": "pm10", "pm25.v": "pm2.5", "iso": "iso_datetime"}
     )
