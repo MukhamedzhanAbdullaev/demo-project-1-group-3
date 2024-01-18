@@ -1,11 +1,11 @@
 from dotenv import load_dotenv
 import os
-from connectors.air_quality_api import AirQualityApiClient
-from connectors.postgresql import PostgreSqlClient
-from assets.metadata_logging import MetaDataLogging, MetaDataLoggingStatus
-from assets.pipeline_logging import PipelineLogging
+from project.connectors.air_quality_api import AirQualityApiClient
+from project.connectors.postgresql import PostgreSqlClient
+from project.assets.metadata_logging import MetaDataLogging, MetaDataLoggingStatus
+from project.assets.pipeline_logging import PipelineLogging
 from sqlalchemy import Table, MetaData, Column, Integer, String, Float
-from assets.air_quality import (
+from project.assets.air_quality import (
     extract_cities_data,
     extract_air_quality,
     transform,

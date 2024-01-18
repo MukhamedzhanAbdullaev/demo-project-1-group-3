@@ -1,6 +1,6 @@
 import pandas as pd
-from connectors.air_quality_api import AirQualityApiClient
-from connectors.postgresql import PostgreSqlClient
+from project.connectors.air_quality_api import AirQualityApiClient
+from project.connectors.postgresql import PostgreSqlClient
 from pathlib import Path
 from sqlalchemy import Table, MetaData, Column, Integer, String, Float
 
@@ -40,7 +40,7 @@ def transform(df_aq: pd.DataFrame, df_cities: pd.DataFrame) -> pd.DataFrame:
     # select specific columns 
     df_aq_cities = df_merged[["city", "country", "city_population", "city_area_km2", "aqi", "h.v", "t.v", "pm10.v", "pm25.v", "iso"]]
     df_aq_cities["aqi"] = pd.to_numeric(df_aq_cities["aqi"], errors='coerce')
-    df_aq_cities["aqi"] = df_aq_cities["aqi"].astype('Int64')
+    df_aq_cities["aqi"] = df_aq_cities["aqi"].astype('int64')
 
     # add rank by aqi (higher ranked is better)
     df_aq_cities["aqi_rank"] = df_aq_cities["aqi"].rank(ascending=True).astype(int)
@@ -58,6 +58,7 @@ def transform(df_aq: pd.DataFrame, df_cities: pd.DataFrame) -> pd.DataFrame:
 
     #Add category rank depending on value of aqi
     df_aq_cities['air_pollution_level'] = pd.cut(df_aq_cities['aqi'], [0, 50, 100, 150, 200, 300, 1000], labels = ['Good', 'Moderate', 'Unhealthy if Sensitive', 'Unhealthy', 'Very Unhealthy', 'Hazardous'])
+    df_aq_cities['air_pollution_level'] = df_aq_cities['air_pollution_level'].astype('object')
 
     return df_aq_cities
 
