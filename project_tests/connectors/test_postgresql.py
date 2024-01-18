@@ -33,6 +33,7 @@ def setup_table():
         metadata,
         Column("id", Integer, primary_key=True),
         Column("iso_datetime", String),
+        Column("city", String),
     )
     return table_name, table, metadata
 
@@ -42,11 +43,27 @@ def test_postgresqlclient_insert(setup_postgresql_client, setup_table):
     table_name, table, metadata = setup_table
     postgresql_client.drop_table(table_name)  # make sure table has already been dropped
 
-    data = [{"id": 1, "iso_datetime": "2024-01-17T04:00:00+08:00"}, {"id": 2, "iso_datetime": "2024-01-17T01:00:00+06:00"}]
+    data = [   
+                {
+                    "id": 1, 
+                    "iso_datetime": "2024-01-17T04:00:00+08:00",
+                    "city": "Mumbai"
+                }, 
+                {
+                    "id": 2, 
+                    "iso_datetime": "2024-01-17T01:00:00+06:00",
+                    "city": "Osaka"
+                },
+                {
+                    "id": 3, 
+                    "iso_datetime": "2024-01-16T21:00:00+02:00",
+                    "city": "Cairo"
+                }
+            ]
 
     postgresql_client.insert(data=data, table=table, metadata=metadata)
 
     result = postgresql_client.select_all(table=table)
-    assert len(result) == 2
+    assert len(result) == 3
 
     postgresql_client.drop_table(table_name)
