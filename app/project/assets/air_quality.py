@@ -1,6 +1,6 @@
 import pandas as pd
-from project.connectors.air_quality_api import AirQualityApiClient
-from project.connectors.postgresql import PostgreSqlClient
+from app.project.connectors.air_quality_api import AirQualityApiClient
+from app.project.connectors.postgresql import PostgreSqlClient
 from pathlib import Path
 from sqlalchemy import Table, MetaData, Column, Integer, String, Float
 
