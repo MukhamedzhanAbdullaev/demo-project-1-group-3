@@ -1,4 +1,4 @@
-from  app.project.connectors.postgresql import PostgreSqlClient
+from project.connectors.postgresql import PostgreSqlClient
 import pytest
 from dotenv import load_dotenv
 import os
