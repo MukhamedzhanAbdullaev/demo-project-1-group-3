@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-from app.project.connectors.air_quality_api import AirQualityApiClient
+from project.connectors.air_quality_api import AirQualityApiClient
 import os
 import pytest
 
