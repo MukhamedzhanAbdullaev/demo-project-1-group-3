@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
-from app.project.assets.air_quality import extract_cities_data, extract_air_quality, transform
-from app.project.connectors.air_quality_api import AirQualityApiClient
+from project.assets.air_quality import extract_cities_data, extract_air_quality, transform
+from project.connectors.air_quality_api import AirQualityApiClient
 import pytest
 from dotenv import load_dotenv
 import pandas as pd
@@ -15,7 +15,7 @@ def test_extract_air_quality_data(setup_extract):
     API_KEY = setup_extract
     air_quality_api_client = AirQualityApiClient(api_key=API_KEY)
     df_cities = extract_cities_data(
-        "./app/project_tests/data/city_data.csv"
+        "./project_tests/data/city_data.csv"
     )
     df_aq = extract_air_quality(
         air_quality_api_client=air_quality_api_client,
@@ -74,7 +74,7 @@ def setup_input_df_aq():
 @pytest.fixture
 def setup_input_df_cities():
     return extract_cities_data(
-        "./app/project_tests/data/city_data.csv"
+        "./project_tests/data/city_data.csv"
     )
 
 @pytest.fixture
