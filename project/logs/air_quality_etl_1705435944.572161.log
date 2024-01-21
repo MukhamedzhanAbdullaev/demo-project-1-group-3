@@ -1,0 +1,6 @@
+2024-01-16 15:12:24,643 - air_quality_etl - INFO - Starting pipeline run
+2024-01-16 15:12:24,643 - air_quality_etl - INFO - Getting pipeline environment variables
+2024-01-16 15:12:24,643 - air_quality_etl - INFO - Creating Air Quality API client
+2024-01-16 15:12:24,643 - air_quality_etl - INFO - Extracting data from Air Quality API and CSV file
+2024-01-16 15:13:43,574 - air_quality_etl - INFO - Transforming dataframes with pandas
+2024-01-16 15:13:43,575 - air_quality_etl - ERROR - Pipeline run failed. See detailed logs: 'city_name'

@@ -1,0 +1,7 @@
+2024-01-16 15:21:02,757 - air_quality_etl - INFO - Starting pipeline run
+2024-01-16 15:21:02,757 - air_quality_etl - INFO - Getting pipeline environment variables
+2024-01-16 15:21:02,758 - air_quality_etl - INFO - Creating Air Quality API client
+2024-01-16 15:21:02,758 - air_quality_etl - INFO - Extracting data from Air Quality API and CSV file
+2024-01-16 15:22:22,585 - air_quality_etl - INFO - Transforming dataframes with pandas
+2024-01-16 15:22:22,616 - air_quality_etl - INFO - Loading data to postgres
+2024-01-16 15:22:22,696 - air_quality_etl - INFO - Pipeline run successful
