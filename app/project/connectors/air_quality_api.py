@@ -46,5 +46,5 @@ class AirQualityApiClient:
                 self.pipeline_logging.logger.info(f"Data not available for {city}")
         else:
             raise Exception(
-                f"Failed to extract data from Open Weather API. Status Code: {response.status_code}. Response: {response.text}"
+                f"Failed to extract data from Air Quality API. Status Code: {response.status_code}. Response: {response.text}"
             )
