@@ -29,7 +29,7 @@ class AirQualityApiClient:
             res = response.json()
             if res['status'] == "ok":
                 try:
-                    self.pipeline_logging.logger.info(f"Getting a response object for {city}")
+                    #self.pipeline_logging.logger.info(f"Getting a response object for {city}")
                     aqi = float(res['data']['aqi'])
                     data = {
                         'city_name': city_parsed,
@@ -39,7 +39,6 @@ class AirQualityApiClient:
                     data.update(flatdict.FlatDict(aq_data, delimiter='.'))
                     time_data = res['data']['time']
                     data.update(time_data)
-                    self.pipeline_logging.logger.info(f"Response object for {city} received")
                     return data
                 except ValueError:
                     self.pipeline_logging.logger.info(f"Air quality data not available for {city}")
