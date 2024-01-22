@@ -28,7 +28,7 @@ def pipeline(config: dict, pipeline_logging: PipelineLogging):
     PORT = os.environ.get("PORT")
 
     pipeline_logging.logger.info("Creating Air Quality API client")
-    air_quality_api_client = AirQualityApiClient(api_key=API_KEY)
+    air_quality_api_client = AirQualityApiClient(api_key=API_KEY, pipeline_logging=pipeline_logging)
     # extract
     pipeline_logging.logger.info("Extracting data from Air Quality API and CSV file")
     df_cities = extract_cities_data(

@@ -1,12 +1,14 @@
 import requests
 import flatdict
+from project.assets.pipeline_logging import PipelineLogging
 
 class AirQualityApiClient:
-    def __init__(self, api_key: str):
+    def __init__(self, api_key: str, pipeline_logging: PipelineLogging):
         self.base_url = "https://api.waqi.info/feed"
         if api_key is None:
             raise Exception("API key cannot be set to None.")
         self.api_key = api_key
+        self.pipeline_logging = pipeline_logging
 
     def get_air_quality(self, city: str) -> dict:
         """
@@ -25,6 +27,7 @@ class AirQualityApiClient:
         response = requests.get(f"{self.base_url}/{city_parsed}/?token={self.api_key}")
         if response.status_code == 200:
             res = response.json()
+            self.pipeline_logging.logger.info(f"Response object for {city}: {res}")
             if res['status'] == "ok":
                 try:
                     aqi = float(res['data']['aqi'])
@@ -38,9 +41,9 @@ class AirQualityApiClient:
                     data.update(time_data)
                     return data
                 except ValueError:
-                    print(f"Air quality data not available for {city}")
+                    self.pipeline_logging.logger.info(f"Air quality data not available for {city}")
             else:
-                print(f"Data not available for {city}")
+                self.pipeline_logging.logger.info(f"Data not available for {city}")
         else:
             raise Exception(
                 f"Failed to extract data from Open Weather API. Status Code: {response.status_code}. Response: {response.text}"

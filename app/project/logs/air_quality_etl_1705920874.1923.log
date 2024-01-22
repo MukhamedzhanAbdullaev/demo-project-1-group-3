@@ -1,0 +1,31 @@
+2024-01-22 05:54:34,265 - air_quality_etl - INFO - Starting pipeline run
+2024-01-22 05:54:34,265 - air_quality_etl - INFO - Getting pipeline environment variables
+2024-01-22 05:54:34,265 - air_quality_etl - INFO - Creating Air Quality API client
+2024-01-22 05:54:34,265 - air_quality_etl - INFO - Extracting data from Air Quality API and CSV file
+2024-01-22 05:54:35,179 - air_quality_etl - INFO - Response object for Tokyo: <Response [200]>
+2024-01-22 05:54:36,096 - air_quality_etl - INFO - Response object for Delhi: <Response [200]>
+2024-01-22 05:54:36,902 - air_quality_etl - INFO - Response object for Shanghai: <Response [200]>
+2024-01-22 05:54:37,939 - air_quality_etl - INFO - Response object for São Paulo: <Response [200]>
+2024-01-22 05:54:38,832 - air_quality_etl - INFO - Response object for Mexico City: <Response [200]>
+2024-01-22 05:54:39,784 - air_quality_etl - INFO - Response object for Cairo: <Response [200]>
+2024-01-22 05:54:40,682 - air_quality_etl - INFO - Response object for Mumbai: <Response [200]>
+2024-01-22 05:54:41,565 - air_quality_etl - INFO - Response object for Beijing: <Response [200]>
+2024-01-22 05:54:42,468 - air_quality_etl - INFO - Response object for Dhaka: <Response [200]>
+2024-01-22 05:54:43,366 - air_quality_etl - INFO - Response object for Osaka: <Response [200]>
+2024-01-22 05:54:44,172 - air_quality_etl - INFO - Response object for New York City: <Response [200]>
+2024-01-22 05:54:45,068 - air_quality_etl - INFO - Response object for Karachi: <Response [200]>
+2024-01-22 05:54:46,024 - air_quality_etl - INFO - Response object for Buenos Aires: <Response [200]>
+2024-01-22 05:54:46,916 - air_quality_etl - INFO - Response object for Chongqing: <Response [200]>
+2024-01-22 05:54:47,724 - air_quality_etl - INFO - Response object for Istanbul: <Response [200]>
+2024-01-22 05:54:48,617 - air_quality_etl - INFO - Response object for Kolkata: <Response [200]>
+2024-01-22 05:54:49,515 - air_quality_etl - INFO - Response object for Manila: <Response [200]>
+2024-01-22 05:54:50,431 - air_quality_etl - INFO - Response object for Lagos: <Response [200]>
+2024-01-22 05:54:51,371 - air_quality_etl - INFO - Response object for Rio de Janeiro: <Response [200]>
+2024-01-22 05:54:51,371 - air_quality_etl - INFO - Air quality data not available for Rio de Janeiro
+2024-01-22 05:54:52,263 - air_quality_etl - INFO - Response object for Tianjin: <Response [200]>
+2024-01-22 05:54:53,153 - air_quality_etl - INFO - Response object for Kinshasa: <Response [200]>
+2024-01-22 05:54:54,049 - air_quality_etl - INFO - Response object for Guangzhou: <Response [200]>
+2024-01-22 05:54:54,945 - air_quality_etl - INFO - Response object for Los Angeles: <Response [200]>
+2024-01-22 05:54:55,835 - air_quality_etl - INFO - Response object for Moscow: <Response [200]>
+2024-01-22 05:54:56,779 - air_quality_etl - INFO - Response object for Shenzhen: <Response [200]>
+2024-01-22 05:54:57,329 - air_quality_etl - ERROR - Pipeline run failed. See detailed logs: 
