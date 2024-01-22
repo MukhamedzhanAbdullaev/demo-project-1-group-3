@@ -27,7 +27,7 @@ class AirQualityApiClient:
         response = requests.get(f"{self.base_url}/{city_parsed}/?token={self.api_key}")
         if response.status_code == 200:
             res = response.json()
-            self.pipeline_logging.logger.info(f"Response object for {city}: {res}")
+            # self.pipeline_logging.logger.info(f"Response object for {city}: {res}")
             if res['status'] == "ok":
                 try:
                     aqi = float(res['data']['aqi'])
