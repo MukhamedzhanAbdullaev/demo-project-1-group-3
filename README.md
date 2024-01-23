@@ -7,7 +7,7 @@ Alan Segal
 
 Mukhamedzhan Abdullaev
 
-## Project Overviev
+## Project Overview
 ### Context
 This project connects to an API that allows the extraction of Population and air quality measurements of a specific city across the globe.
 ### Goal 
