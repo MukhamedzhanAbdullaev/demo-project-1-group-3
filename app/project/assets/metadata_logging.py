@@ -19,7 +19,16 @@ class MetaDataLogging:
         postgresql_client: PostgreSqlClient,
         config: dict = {},
         log_table_name: str = "air_quality_pipeline_logs",
-    ):
+    ):  
+        """
+        Initialize MetaDataLogging instance.
+
+        Args:
+        - pipeline_name (str): Name of the pipeline.
+        - postgresql_client (PostgreSqlClient): PostgreSQL client.
+        - config (dict, optional): Configuration data for the pipeline.
+        - log_table_name (str, optional): Name of the log table in the database.
+        """
         self.pipeline_name = pipeline_name
         self.log_table_name = log_table_name
         self.postgresql_client = postgresql_client
@@ -60,7 +69,14 @@ class MetaDataLogging:
         timestamp: datetime = None,
         logs: str = None,
     ) -> None:
-        """Writes pipeline metadata log to a database"""
+        """
+        Writes pipeline metadata log to a database
+        
+        Args:
+        - status (MetaDataLoggingStatus, optional): Status of the pipeline log.
+        - timestamp (datetime, optional): Timestamp for the log entry.
+        - logs (str, optional): Log information for the entry.
+        """
         if timestamp is None:
             timestamp = datetime.now()
         insert_statement = insert(self.table).values(

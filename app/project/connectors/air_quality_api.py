@@ -4,6 +4,14 @@ from project.assets.pipeline_logging import PipelineLogging
 
 class AirQualityApiClient:
     def __init__(self, api_key: str, pipeline_logging: PipelineLogging):
+        
+        """
+        Initialize AirQualityApiClient instance.
+
+        Args:
+        - api_key (str): API key for accessing the Air Quality API.
+        - pipeline_logging (PipelineLogging): Pipeline logging instance.
+        """
         self.base_url = "https://api.waqi.info/feed"
         if api_key is None:
             raise Exception("API key cannot be set to None.")

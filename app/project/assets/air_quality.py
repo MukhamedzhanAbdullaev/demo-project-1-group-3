@@ -7,6 +7,12 @@ from sqlalchemy import Table, MetaData, Column, Integer, String, Float
 def extract_cities_data(city_reference_path: Path)->pd.DataFrame:
     """
     Perform extraction using a CSV file to get data on most populated cities in the world.
+    
+    Args:
+    - city_reference_path (Path): The path to the CSV file containing city data.
+
+    Returns:
+    pd.DataFrame: A DataFrame containing information about the most populated cities.
     """
     df_cities = pd.read_csv(city_reference_path)
     return df_cities
@@ -17,6 +23,13 @@ def extract_air_quality(
 ) -> pd.DataFrame:
     """
     Perform extraction using an API which has live data on each city.
+    
+    Args:
+    - air_quality_api_client (AirQualityApiClient): An instance of the AirQualityApiClient used to fetch air quality data.
+    - df_cities (pd.DataFrame): A DataFrame containing information about cities for which air quality data is to be extracted.
+
+    Returns:
+    pd.DataFrame: A DataFrame containing air quality data for the specified cities.
     """
     aq_data = []
     for city in df_cities["city"]:
@@ -28,7 +41,16 @@ def extract_air_quality(
 
 
 def transform(df_aq: pd.DataFrame, df_cities: pd.DataFrame) -> pd.DataFrame:
-    """Transform the raw dataframes."""
+    """
+    Transform the raw dataframes.
+    
+    Args:
+    - df_aq (pd.DataFrame): DataFrame containing raw air quality data.
+    - df_cities (pd.DataFrame): DataFrame containing information about cities.
+
+    Returns:
+    pd.DataFrame: Transformed DataFrame containing processed air quality and city information.
+    """
     pd.options.mode.chained_assignment = None  # default='warn'
     
     # set city names to same format
@@ -73,11 +95,17 @@ def load(
     Load dataframe to either a database.
 
     Args:
-        df: dataframe to load
-        postgresql_client: postgresql client
-        table: sqlalchemy table
-        metadata: sqlalchemy metadata
-        load_method: supports one of: [insert, upsert, overwrite]
+    - df: Dataframe to load
+    - postgresql_client: Postgresql client
+    - table: Sqlalchemy table
+    - metadata: Sqlalchemy metadata
+    - load_method: Supports one of: [insert, upsert, overwrite]
+
+    Raises:
+    - Exception: If an invalid load method is specified.
+
+    Returns:
+    None
     """
     if load_method == "insert":
         postgresql_client.insert(
