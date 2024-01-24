@@ -10,7 +10,7 @@ Mukhamedzhan Abdullaev
 ## Project Overview
 
 ### Context
-This project connects to an API that allows the extraction of Population and air quality measurements of a specific city across the globe.
+This project tracks the current air quality and related data of the largest cities in the world.
 ### Goal 
 - It aims to create business solutions as they relate to population, population density, and air quality in cities selected from a CSV file.
 - This data pipeline would be valuable to businesses that prioritize respiratory healthcare, air filtering technology, or real estate brokers who target healthy living
@@ -23,9 +23,9 @@ This project connects to an API that allows the extraction of Population and air
 The project is structured as follows:
 
 - **app**: Contains the main pipeline script and associated modules.
-- **project.assets**: Includes metadata logging and pipeline logging modules.
+- **project.assets**: Includes metadata logging, pipeline logging modules and extract, transform and load functions.
 - **project.connectors**: Contains connectors for the Air Quality API and PostgreSQL.
-- **project.pipelines**: Holds specific pipelines (e.g., `air_quality`).
+- **project.pipelines**: Holds specific pipeline (e.g., `air_quality`) and the pipeline configuration.
 - **app.project_tests**: Houses test data and test scripts for the project.
 
 ## Docker Integration
@@ -34,11 +34,11 @@ The project is Dockerized for easy deployment. The Dockerfile sets up a Python 3
 
 ### Building the Docker Image
 
-docker build -t air-quality-etl:latest
+docker build -t air-quality-etl:latest .
 
 ## Running the Docker Container
 
-docker run air-quality-etl:latest
+docker run --env-file .env air-quality-etl:latest
 
 ## AWS Integration
 
