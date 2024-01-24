@@ -17,7 +17,15 @@ import schedule
 import time
 
 def pipeline(config: dict, pipeline_logging: PipelineLogging):
+    """
+    Execute the ETL pipeline.
+
+    Args:
+    - config (dict): Configuration dictionary for the pipeline.
+    - pipeline_logging (PipelineLogging): Logging instance for the pipeline.
+    """
     pipeline_logging.logger.info("Starting pipeline run")
+
     # set up environment variables
     pipeline_logging.logger.info("Getting pipeline environment variables")
     API_KEY = os.environ.get("API_KEY")
@@ -83,7 +91,15 @@ def run_pipeline_schedule(
     pipeline_name: str,
     postgresql_logging_client: PostgreSqlClient,
     pipeline_config: dict,
-):
+):  
+    """
+    Run the pipeline on schedule.
+
+    Args:
+    - pipeline_name (str): Name of the pipeline.
+    - postgresql_logging_client (PostgreSqlClient): PostgreSQL client for logging.
+    - pipeline_config (dict): Configuration dictionary for the pipeline.
+    """
     pipeline_logging = PipelineLogging (
         pipeline_name=pipeline_name,
         log_folder_path=pipeline_config.get("config").get("log_folder_path"),

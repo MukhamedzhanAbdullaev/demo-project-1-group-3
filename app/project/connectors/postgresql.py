@@ -34,6 +34,16 @@ class PostgreSqlClient:
         self.engine = create_engine(connection_url)
 
     def select_all(self, table: Table) -> list[dict]:
+
+        """
+        Select all rows from the specified table.
+
+        Args:
+        - table (Table): The SQLAlchemy table to select from.
+
+        Returns:
+        - list[dict]: A list of dictionaries representing rows in the table.
+        """
         return [dict(row) for row in self.engine.execute(table.select()).all()]
 
     def create_table(self, metadata: MetaData) -> None:
@@ -43,18 +53,30 @@ class PostgreSqlClient:
         metadata.create_all(self.engine)
 
     def drop_table(self, table_name: str) -> None:
+        """
+        Drops the specified table.
+        """
         self.engine.execute(f"drop table if exists {table_name};")
 
     def insert(self, data: list[dict], table: Table, metadata: MetaData) -> None:
+        """
+        Inserts data into the specified table.
+        """
         metadata.create_all(self.engine)
         insert_statement = postgresql.insert(table).values(data)
         self.engine.execute(insert_statement)
 
     def overwrite(self, data: list[dict], table: Table, metadata: MetaData) -> None:
+        """
+        Overwrites the specified table with the provided data.
+        """
         self.drop_table(table.name)
         self.insert(data=data, table=table, metadata=metadata)
 
     def upsert(self, data: list[dict], table: Table, metadata: MetaData) -> None:
+        """
+        Upserts (Insert or Update) the specified data into the table based on primary key.
+        """
         metadata.create_all(self.engine)
         key_columns = [
             pk_column.name for pk_column in table.primary_key.columns.values()

@@ -8,6 +8,14 @@ class PipelineLogging:
             pipeline_name: str, 
             log_folder_path: str
         ):
+
+        """
+        Initialize PipelineLogging instance.
+
+        Args:
+        - pipeline_name (str): Name of the pipeline.
+        - log_folder_path (str): Path to the folder where logs will be stored.
+        """
         self.pipeline_name = pipeline_name
         self.log_folder_path = log_folder_path
         logger = logging.getLogger(pipeline_name)
@@ -29,5 +37,12 @@ class PipelineLogging:
         self.logger = logger
 
     def get_logs(self) -> str:
+        
+        """
+        Retrieve logs from the log file.
+
+        Returns:
+        - str: Contents of the log file.
+        """
         with open(self.file_path, "r") as file:
             return "".join(file.readlines())
