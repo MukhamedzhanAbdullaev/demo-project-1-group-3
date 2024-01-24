@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from project.assets.air_quality import extract_cities_data, extract_air_quality, transform
 from project.connectors.air_quality_api import AirQualityApiClient
+from project.assets.pipeline_logging import PipelineLogging
 import pytest
 from dotenv import load_dotenv
 import pandas as pd
@@ -13,7 +14,11 @@ def setup_extract():
 
 def test_extract_air_quality_data(setup_extract):
     API_KEY = setup_extract
-    air_quality_api_client = AirQualityApiClient(api_key=API_KEY)
+    pipeline_logging = PipelineLogging (
+        pipeline_name="air_quality_etl",
+        log_folder_path="./project_tests/logs"
+    )
+    air_quality_api_client = AirQualityApiClient(api_key=API_KEY, pipeline_logging=pipeline_logging)
     df_cities = extract_cities_data(
         "./project_tests/data/city_data.csv"
     )

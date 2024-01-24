@@ -1,0 +1,5 @@
+2024-01-24 10:41:40,323 - air_quality_etl - INFO - Air quality data not available for Rio de Janeiro
+2024-01-24 10:42:03,449 - air_quality_etl - INFO - Data not available for Luanda
+2024-01-24 10:42:14,629 - air_quality_etl - INFO - Data not available for Surat
+2024-01-24 10:42:22,032 - air_quality_etl - INFO - Data not available for Dar es Salaam
+2024-01-24 10:42:23,890 - air_quality_etl - INFO - Data not available for Belo Horizonte
