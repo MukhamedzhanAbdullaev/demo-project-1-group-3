@@ -70,9 +70,11 @@ Make sure to set the necessary AWS environment variables:
 
 ### 1.Clone the repository:
 git clone https://github.com/your-username/air-quality-etl.git
-cd air-quality-etl
 ### 2.Install dependencies:
 pip install -r requirements.txt
-### 3.Set up environment variables (see .env.example).
+### 3.Set up environment variables (clone .env.example and rename to .env).
 ### 4.Run the pipeline locally:
+cd app
 python -m project.pipelines.air_quality
+### 5. Run the pipeline tests locally:
+python -m pytest project_tests
