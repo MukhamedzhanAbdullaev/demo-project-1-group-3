@@ -49,7 +49,6 @@ def pipeline(config: dict, pipeline_logging: PipelineLogging):
     # transform
     pipeline_logging.logger.info("Transforming dataframes with pandas")
     df_transformed = transform(df_aq=df_aq, df_cities=df_cities)
-    print(df_transformed.head())
     # load
     pipeline_logging.logger.info("Loading data to postgres")
     postgresql_client = PostgreSqlClient(
