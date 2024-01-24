@@ -36,7 +36,6 @@ def extract_air_quality(
         aq_data.append(air_quality_api_client.get_air_quality(city=city))
 
     df_aq = pd.json_normalize(aq_data)
-    # print(df_aq.iloc[:, : 10])
     return df_aq
 
 

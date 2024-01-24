@@ -18,6 +18,5 @@ def test_air_quality_client_get_city_by_name(setup):
     )
     air_quality_api_client = AirQualityApiClient(api_key=API_KEY, pipeline_logging=pipeline_logging)
     data = air_quality_api_client.get_air_quality(city="Qingdao")
-    print(data)
     assert type(data) == dict
     assert len(data) > 10

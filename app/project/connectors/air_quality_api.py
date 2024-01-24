@@ -37,7 +37,6 @@ class AirQualityApiClient:
             res = response.json()
             if res['status'] == "ok":
                 try:
-                    #self.pipeline_logging.logger.info(f"Getting a response object for {city}")
                     aqi = float(res['data']['aqi'])
                     data = {
                         'city_name': city_parsed,

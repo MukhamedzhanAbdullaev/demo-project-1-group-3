@@ -41,8 +41,8 @@ def setup_table():
 def test_postgresqlclient_insert(setup_postgresql_client, setup_table):
     postgresql_client = setup_postgresql_client
     table_name, table, metadata = setup_table
-    postgresql_client.drop_table(table_name)  # make sure table has already been dropped
-
+    # make sure table has already been dropped before creating another
+    postgresql_client.drop_table(table_name)
     data = [   
                 {
                     "id": 1, 
